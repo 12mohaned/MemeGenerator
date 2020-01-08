@@ -1,5 +1,8 @@
 package Controller;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
+import java.awt.LayoutManager;
 import java.awt.Robot;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,6 +16,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.OverlayLayout;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.ArrayList;
 
@@ -32,11 +36,15 @@ MemeView.getShareIt().addActionListener(this);
 MemeView.getSelectImage().addActionListener(this);
 MemeView.getFavoriteMemes().addActionListener(this);
 MemeView.getFeaturedMemes().addActionListener(this);
+MemeView.getAddTopText().addActionListener(this);
+MemeView.getMinusSign().addActionListener(this);
+MemeView.getIncreaseSign().addActionListener(this);
 FavoriteMemePath = new ArrayList<String>();
 }
 public static void main(String[]args) {
 new Controller();
 }
+@SuppressWarnings("deprecation")
 @Override
 /* get the path of the Meme which is selected*/
 public void actionPerformed(ActionEvent e) {
@@ -57,6 +65,7 @@ if(Bool == JFileChooser.APPROVE_OPTION) {
 			Image.SCALE_SMOOTH);	
 	MemeView.getMemePanel().setIcon(new ImageIcon(dimg));
 	MemeView.setCurrentPath(path);
+	MemeView.getMemePanel().setText("Hello");
 	}
 	catch(Exception ImageException) 
 	{
@@ -64,7 +73,8 @@ if(Bool == JFileChooser.APPROVE_OPTION) {
 	}
 }
 }
-else {
+else 
+{
 if(MemeView.getSave() == e.getSource()) {
 JFileChooser JFSave = new JFileChooser("Save As");
 int i = JFSave.showSaveDialog(MemeView);
@@ -72,9 +82,32 @@ if(i == JFileChooser.APPROVE_OPTION) {
 SaveMeme(JFSave.getSelectedFile());
 }
 }
+else 
+{
+if(MemeView.getFavorite() == e.getSource())
+{
+//FavoriteMeme(MemeView.getCurrentPath());
+}
 else {
-if(MemeView.getFavorite() == e.getSource()) {
-FavoriteMeme(MemeView.getCurrentPath());
+if(MemeView.getShareIt() == e.getSource()) {
+MemeView.getShareVia().setVisible(true);
+MemeView.add(MemeView.getShareVia());	
+}
+else {
+if(MemeView.getAddTopText() == e.getSource()) {
+	AddonMemePanel();
+}
+else {
+if(MemeView.getIncreaseSign() == e.getSource()) {
+	
+}	
+else {
+if(MemeView.getMinusSign() == e.getSource()) {
+	
+}	
+}
+}
+}
 }
 }
 }
@@ -97,13 +130,48 @@ public void SaveMeme(File MemeFile) {
 	}
 }
 //Method to Favorite a meme
-public void FavoriteMeme(String MemePath) {
-if(MemePath != null) {
-FavoriteMemePath.add(MemePath);
-System.out.println(MemePath + "b");
+//public void FavoriteMeme(String MemePath) {
+//if(MemePath != null) {
+//FavoriteMemePath.add(MemePath);
+//System.out.println(MemePath + "b");
+//}
+//else {
+//}
+//}
+
+//Method Which add on MemePanel Text(s)
+public void AddonMemePanel() {	
+	LayoutManager overlay = new OverlayLayout(MemeView.getMemePanel());
+	MemeView.getMemePanel().setLayout(overlay);
+	JLabel TextonMeme = new JLabel();
+	if(MemeView.getMemeText().size() == 0) 
+	{
+	TextonMeme.setText(MemeView.getAllText().getText());
+	TextonMeme.setForeground(Color.WHITE);
+	TextonMeme.setFont(new Font("SanSerif",Font.BOLD,20));
+	TextonMeme.setAlignmentX(1f);
+	TextonMeme.setAlignmentY(1f);
+	MemeView.getMemePanel().add(TextonMeme);
+	MemeView.getMemePanel().add(TextonMeme);
+	if(! TextonMeme.getText().isEmpty()) {
+	MemeView.getMemeText().add(TextonMeme.getText());
+	}
+	}
+	else 
+	{
+	TextonMeme.setText(MemeView.getAllText().getText());
+	TextonMeme.setForeground(Color.WHITE);
+	TextonMeme.setFont(new Font("SanSerif",Font.BOLD,20));
+	TextonMeme.setAlignmentX(0.1f);
+	TextonMeme.setAlignmentY(0.1f);
+	MemeView.getMemePanel().add(TextonMeme);
+	MemeView.getMemePanel().add(TextonMeme);
+	if(!TextonMeme.getText().isEmpty()) {
+	MemeView.getMemeText().add(TextonMeme.getText());
+	}
+	}
 }
-else {
-System.out.println(FavoriteMemePath.toString());
-}
+public void textresize() {
+	
 }
 }

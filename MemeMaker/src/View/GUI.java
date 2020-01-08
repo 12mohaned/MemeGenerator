@@ -7,9 +7,13 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.LayoutManager;
+import java.awt.TextArea;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import Controller.Controller;
 public class GUI  extends JFrame{
@@ -22,61 +26,89 @@ private JButton Favorite;
 private JButton ShareIt;
 private JPanel Text;
 private JLabel MemePanel;
-private JPanel Controls;
-//private JTextField TopText;
-private JEditorPane TopText;
-private JTextField BottomText;
+private JPanel Buttons;
+private JPanel MemeControls;
+private JTextArea AllText;
 private JButton FavoriteMemes;
 private JButton AddTextUpper;
-private JButton AddTextbelow;
-private JPopupMenu SaveAs;
+private JPopupMenu ShareVia;
 private String CurrentPath;
+private JButton AddTopText;
 private Controller c;
 private Meme meme; 
+private JButton increaseSign;
+private JButton MinusSign;
+private ArrayList<String>MemeText;
+private JPanel AddSigns;
 public GUI(Controller c) {
 	super("Meme Maker");
 	this.c = c;
 	Text = new JPanel();
+	increaseSign = new JButton();
+	MinusSign = new JButton();
 	MemePanel = new JLabel();
 	MemePanel.setPreferredSize(new Dimension(400,10));
-	Controls = new JPanel();
+	Buttons = new JPanel();
 	Save = new JButton();
-	SaveAs = new JPopupMenu("Save As Window");
-	JMenuItem SaveItem = new JMenuItem("Select");
-	SaveAs.add(SaveItem);
+	MemeText = new ArrayList<String>();
+	ShareVia = new JPopupMenu("Share on social Media");
+	JMenuItem Facebook = new JMenuItem("Share on Facebook");
+	JMenuItem Twitter = new JMenuItem("Share on Twitter");
+	ShareVia.setPreferredSize(new Dimension(500,500));
 	FavoriteMemes = new JButton("FavoriteMemes");
-	AddTextUpper = new JButton("Add upperText");
-	AddTextbelow = new JButton("Add belowtext");
+	AddTextUpper = new JButton("Add Text on Meme");
 	SelectImage = new JButton("");
 	Draw = new JButton("");
 	Write= new JButton("Write");
 	FeaturedMemes = new JButton("Featured Memes");
 	Favorite = new JButton("");
 	ShareIt = new JButton("");
-	TopText = new JEditorPane();
-	BottomText = new JTextField();
-	Text.setLayout(new GridLayout(1,1));
-	Text.add(TopText);
-	Text.add(BottomText);
-	Controls.add(Draw);
-	Controls.add(Favorite);
-	Controls.add(ShareIt);
-	Controls.add(Save);	
-	Controls.add(FavoriteMemes);
-	Controls.add(FeaturedMemes);
-	Controls.add(SelectImage);
+	AllText = new JTextArea(5,20);
+	MemeControls = new JPanel();
+	increaseSign.setPreferredSize(new Dimension(100,100));
+	MinusSign.setPreferredSize(new Dimension(80,50));
+	AllText.setSize(new Dimension(50,50));
 	Save.setIcon(new ImageIcon("/Users/mohanedmashaly/eclipse-workspace/MemeMaker/src/View/save.png"));
 	Draw.setIcon(new ImageIcon("/Users/mohanedmashaly/eclipse-workspace/MemeMaker/src/View/pen.png"));
 	Favorite.setIcon(new ImageIcon("/Users/mohanedmashaly/eclipse-workspace/MemeMaker/src/View/love.png"));
 	ShareIt.setIcon(new ImageIcon("/Users/mohanedmashaly/eclipse-workspace/MemeMaker/src/View/share.jpg"));
 	SelectImage.setIcon(new ImageIcon("/Users/mohanedmashaly/eclipse-workspace/MemeMaker/src/View/cursor.png"));
+	increaseSign.setIcon(new ImageIcon("/Users/mohanedmashaly/MemeGenerator/MemeMaker/src/View/plus.png"));
+	MinusSign.setIcon(new ImageIcon("/Users/mohanedmashaly/MemeGenerator/MemeMaker/src/View/minus.png"));
+	AddTextUpper.setSize(new Dimension(100,100));
+	AddTextUpper.setLocation(500, 500);
+	Text.add(AddTextUpper);
+	MemeControls.add(MinusSign);
+	MemeControls.add(increaseSign);
+	MemeControls.add(AllText);
+	Buttons.add(Draw);
+	Buttons.add(Favorite);
+	Buttons.add(ShareIt);
+	Buttons.add(Save);	
+	Buttons.add(FavoriteMemes);
+	Buttons.add(FeaturedMemes);
+	Buttons.add(SelectImage);
+	ShareVia.add(Facebook);
+	ShareVia.add(Twitter);
+	this.add(ShareVia);
 	this.setLayout(new BorderLayout());
-	this.add(Controls,BorderLayout.NORTH);
+	this.add(Buttons,BorderLayout.NORTH);
 	this.add(MemePanel,BorderLayout.WEST);
-	this.add(Text,BorderLayout.EAST);
+	this.add(MemeControls,BorderLayout.SOUTH);
+	this.add(Text,BorderLayout.CENTER);
 	this.setSize(new Dimension(1200,1200));
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	this.setVisible(true);
+}
+public ArrayList<String> getMemeText() {
+	return MemeText;
+}
+public void setMemeText(ArrayList<String> memeText) {
+	MemeText = memeText;
+}
+
+public JButton getAddTopText() {
+	return AddTextUpper;
 }
 public Meme getMeme() {
 	return meme;
@@ -97,21 +129,14 @@ public String getCurrentPath() {
 public void setCurrentPath(String currentPath) {
 	CurrentPath = currentPath;
 }
-public JPopupMenu getSaveAs() {
-	return SaveAs;
+
+public JPopupMenu getShareVia() {
+	return ShareVia;
 }
-public JEditorPane getTopText() {
-	return TopText;
+public void setAllText(JTextArea AllText) {
+	this.AllText = AllText;
 }
-public void setTopText(JEditorPane topText) {
-	TopText = topText;
-}
-public JTextField getBottomText() {
-	return BottomText;
-}
-public void setBottomText(JTextField bottomText) {
-	BottomText = bottomText;
-}
+
 public JButton getSave() {
 	return Save;
 }
@@ -135,5 +160,20 @@ public JButton getShareIt() {
 }
 public JButton getFavoriteMemes() {
 	return FavoriteMemes;
+}
+public JTextArea getAllText() {
+	return AllText;
+}
+public JPanel getMemeControls() {
+	return MemeControls;
+}
+public void setMemeControls(JPanel memeControls) {
+	MemeControls = memeControls;
+}
+public JButton getIncreaseSign() {
+	return increaseSign;
+}
+public JButton getMinusSign() {
+	return MinusSign;
 }
 }

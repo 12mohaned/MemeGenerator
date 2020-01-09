@@ -42,6 +42,7 @@ private ArrayList<JLabel>MemeText;
 private JPanel AddSigns;
 private JColorChooser MemeColor;
 private Color choosenColor;
+private ArrayList<Meme>FavoriteMeme;
 public GUI(Controller c) {
 	super("Meme Maker");
 	this.c = c;
@@ -68,7 +69,7 @@ public GUI(Controller c) {
 	AllText = new JTextArea(5,20);
 	MemeControls = new JPanel();
 	MemeColor = new JColorChooser();
-	MemeColor.setPreferredSize(new Dimension(450,50));
+	MemeColor.setPreferredSize(new Dimension(450,300));
 	increaseSign.setPreferredSize(new Dimension(100,100));
 	MinusSign.setPreferredSize(new Dimension(80,50));
 	AllText.setSize(new Dimension(50,50));
@@ -187,5 +188,11 @@ public JButton getIncreaseSign() {
 }
 public JButton getMinusSign() {
 	return MinusSign;
+}
+public Color getChoosenColor() {
+	return choosenColor;
+}
+public void setChoosenColor(Color choosenColor) {
+	this.choosenColor = choosenColor;
 }
 }

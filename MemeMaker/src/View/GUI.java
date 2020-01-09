@@ -38,8 +38,10 @@ private Controller c;
 private Meme meme; 
 private JButton increaseSign;
 private JButton MinusSign;
-private ArrayList<String>MemeText;
+private ArrayList<JLabel>MemeText;
 private JPanel AddSigns;
+private JColorChooser MemeColor;
+private Color choosenColor;
 public GUI(Controller c) {
 	super("Meme Maker");
 	this.c = c;
@@ -50,7 +52,7 @@ public GUI(Controller c) {
 	MemePanel.setPreferredSize(new Dimension(400,10));
 	Buttons = new JPanel();
 	Save = new JButton();
-	MemeText = new ArrayList<String>();
+	MemeText = new ArrayList<JLabel>();
 	ShareVia = new JPopupMenu("Share on social Media");
 	JMenuItem Facebook = new JMenuItem("Share on Facebook");
 	JMenuItem Twitter = new JMenuItem("Share on Twitter");
@@ -65,6 +67,8 @@ public GUI(Controller c) {
 	ShareIt = new JButton("");
 	AllText = new JTextArea(5,20);
 	MemeControls = new JPanel();
+	MemeColor = new JColorChooser();
+	MemeColor.setPreferredSize(new Dimension(450,50));
 	increaseSign.setPreferredSize(new Dimension(100,100));
 	MinusSign.setPreferredSize(new Dimension(80,50));
 	AllText.setSize(new Dimension(50,50));
@@ -76,7 +80,7 @@ public GUI(Controller c) {
 	increaseSign.setIcon(new ImageIcon("/Users/mohanedmashaly/MemeGenerator/MemeMaker/src/View/plus.png"));
 	MinusSign.setIcon(new ImageIcon("/Users/mohanedmashaly/MemeGenerator/MemeMaker/src/View/minus.png"));
 	AddTextUpper.setSize(new Dimension(100,100));
-	AddTextUpper.setLocation(500, 500);
+	AddTextUpper.setLocation(300, 300);
 	Text.add(AddTextUpper);
 	MemeControls.add(MinusSign);
 	MemeControls.add(increaseSign);
@@ -90,20 +94,28 @@ public GUI(Controller c) {
 	Buttons.add(SelectImage);
 	ShareVia.add(Facebook);
 	ShareVia.add(Twitter);
+	choosenColor = MemeColor.getColor();
 	this.add(ShareVia);
 	this.setLayout(new BorderLayout());
 	this.add(Buttons,BorderLayout.NORTH);
 	this.add(MemePanel,BorderLayout.WEST);
 	this.add(MemeControls,BorderLayout.SOUTH);
 	this.add(Text,BorderLayout.CENTER);
+	this.add(MemeColor,BorderLayout.EAST);
 	this.setSize(new Dimension(1200,1200));
 	this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 	this.setVisible(true);
 }
-public ArrayList<String> getMemeText() {
+public JColorChooser getMemeColor() {
+	return MemeColor;
+}
+public void setMemeColor(JColorChooser memeColor) {
+	MemeColor = memeColor;
+}
+public ArrayList<JLabel> getMemeText() {
 	return MemeText;
 }
-public void setMemeText(ArrayList<String> memeText) {
+public void setMemeText(ArrayList<JLabel> memeText) {
 	MemeText = memeText;
 }
 

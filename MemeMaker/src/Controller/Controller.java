@@ -17,15 +17,19 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.OverlayLayout;
+import javax.swing.event.ChangeEvent;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.util.ArrayList;
 
 import View.GUI;
-public class Controller implements ActionListener {
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+public class Controller implements ActionListener, javax.swing.event.ChangeListener {
 private GUI MemeView ;
 private ArrayList<String>FavoriteMemePath;
 
-public Controller() {
+public Controller() 
+{
 MemeView = new GUI(this);	
 MemeView.getSave().addActionListener(this);
 MemeView.getFeaturedMemes().addActionListener(this);
@@ -39,6 +43,7 @@ MemeView.getFeaturedMemes().addActionListener(this);
 MemeView.getAddTopText().addActionListener(this);
 MemeView.getMinusSign().addActionListener(this);
 MemeView.getIncreaseSign().addActionListener(this);
+MemeView.getMemeColor().getSelectionModel().addChangeListener(this);
 FavoriteMemePath = new ArrayList<String>();
 }
 public static void main(String[]args) {
@@ -95,6 +100,7 @@ MemeView.add(MemeView.getShareVia());
 }
 else {
 if(MemeView.getAddTopText() == e.getSource()) {
+	System.out.println(MemeView.getChoosenColor());
 	AddonMemePanel();
 }
 else {
@@ -202,7 +208,6 @@ public void decreasetextsize() {
 	}	
 	}	
 }
-
 //Method to Favorite a meme
 //public void FavoriteMeme(String MemePath) {
 //if(MemePath != null) {
@@ -212,4 +217,24 @@ public void decreasetextsize() {
 //else {
 //}
 //}
-}
+
+@Override
+public void stateChanged(ChangeEvent e) {
+	
+if(!MemeView.getAllText().getText().isEmpty())
+{
+	ArrayList<JLabel>MemeResize = MemeView.getMemeText();
+	for(int i=0; i < MemeResize.size();i++) {
+	if(MemeResize.get(i).getText().equals(MemeView.getAllText().getText()) && !MemeView.getAllText().getText().isEmpty()) {
+		try 
+		{
+		MemeResize.get(i).setForeground(new Color(MemeView.getMemeColor().getColor().getRGB()));
+		}
+		catch(Exception colorexception) {
+		colorexception.printStackTrace();	
+		}		
+    }	
+  }	
+     }
+   }
+    }

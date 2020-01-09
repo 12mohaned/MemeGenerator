@@ -99,11 +99,11 @@ if(MemeView.getAddTopText() == e.getSource()) {
 }
 else {
 if(MemeView.getIncreaseSign() == e.getSource()) {
-	
+	increasetextsize();
 }	
 else {
 if(MemeView.getMinusSign() == e.getSource()) {
-	
+	decreasetextsize();
 }	
 }
 }
@@ -129,15 +129,7 @@ public void SaveMeme(File MemeFile) {
 	ImageErrorException.printStackTrace();	
 	}
 }
-//Method to Favorite a meme
-//public void FavoriteMeme(String MemePath) {
-//if(MemePath != null) {
-//FavoriteMemePath.add(MemePath);
-//System.out.println(MemePath + "b");
-//}
-//else {
-//}
-//}
+
 
 //Method Which add on MemePanel Text(s)
 public void AddonMemePanel() {	
@@ -154,7 +146,7 @@ public void AddonMemePanel() {
 	MemeView.getMemePanel().add(TextonMeme);
 	MemeView.getMemePanel().add(TextonMeme);
 	if(! TextonMeme.getText().isEmpty()) {
-	MemeView.getMemeText().add(TextonMeme.getText());
+	MemeView.getMemeText().add(TextonMeme);
 	}
 	}
 	else 
@@ -167,11 +159,57 @@ public void AddonMemePanel() {
 	MemeView.getMemePanel().add(TextonMeme);
 	MemeView.getMemePanel().add(TextonMeme);
 	if(!TextonMeme.getText().isEmpty()) {
-	MemeView.getMemeText().add(TextonMeme.getText());
+	MemeView.getMemeText().add(TextonMeme);
 	}
 	}
 }
-public void textresize() {
-	
+//increasetextsize increase the size of Text
+public void increasetextsize() {
+	ArrayList<JLabel>MemeResize = MemeView.getMemeText();
+	for(int i=0; i < MemeResize.size();i++) {
+	if(MemeResize.get(i).getText().equals(MemeView.getAllText().getText()) && 
+	!MemeView.getAllText().getText().isEmpty()) {
+		try {
+	int fontsize = MemeResize.get(i).getFont().getSize();
+	if(fontsize < 43) {
+	fontsize+=3;
+	MemeResize.get(i).setFont(new Font("SanSerif",Font.BOLD,fontsize));
+	}
+		}
+		catch(Exception e) {
+		e.printStackTrace();	
+		}
+		
+	}	
+	}	
 }
+public void decreasetextsize() {
+	ArrayList<JLabel>MemeResize = MemeView.getMemeText();
+	for(int i=0; i < MemeResize.size();i++) {
+	if(MemeResize.get(i).getText().equals(MemeView.getAllText().getText()) && 
+	!MemeView.getAllText().getText().isEmpty()) {
+		try {
+	int fontsize = MemeResize.get(i).getFont().getSize();	
+	fontsize-=3;
+	if(fontsize >=17) {
+	MemeResize.get(i).setFont(new Font("SanSerif",Font.BOLD,fontsize));
+		}
+		}
+		catch(Exception e) {
+		e.printStackTrace();	
+		}
+		
+	}	
+	}	
+}
+
+//Method to Favorite a meme
+//public void FavoriteMeme(String MemePath) {
+//if(MemePath != null) {
+//FavoriteMemePath.add(MemePath);
+//System.out.println(MemePath + "b");
+//}
+//else {
+//}
+//}
 }
